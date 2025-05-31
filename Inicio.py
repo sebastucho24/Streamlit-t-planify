@@ -109,7 +109,7 @@ estudiantes = [
         "programa": "Desarrollo de Software",
         "semestre": "2025-1 - III",
         "repo_url": "https://github.com/ana/proyecto-ntp",
-        "imagen_path": ""
+        "imagen_path": "assets/instasize_240620163131.jpg"
     }
 
 ]

@@ -16,3 +16,8 @@ st.subheader("🔹 Ejercicio 3: Filtro por Municipio")
 Country = st.multiselect("Selecciona municipios", sorted(df['Country'].unique()))
 df_Country = df[df['Country'].isin(Country)] if Country else df
 st.write(df_Country)
+
+st.subheader("🔹 Ejercicio 4: Filtro por tipo de suscripción")
+plans = st.multiselect("Selecciona el/los tipo(s) de suscripción", sorted(df['Subscription_Type'].unique()))
+df_Subscription = df[df['Subscription_Type'].isin(plans)] if plans else df
+st.write(df_Subscription)

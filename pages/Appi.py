@@ -3,7 +3,7 @@ import requests
 import pandas as pd
 import plotly.express as px
 
-API_URL = "http://localhost:3000/usuarios"  # Ajusta si usas otro puerto
+API_URL = "http://localhost:3001/users"  # Ajusta si usas otro puerto
 
 @st.cache_data
 def get_usuarios():
@@ -97,29 +97,16 @@ if usuario:
                     plan["tareas"].append(nueva_tarea)
                     st.success(f"Tarea '{tarea_titulo}' agregada al plan '{plan_seleccionado}'.")
 
-    # ANÁLISIS VISUAL
-    st.divider()
-    st.header("📊 Análisis visual")
 
-    filas = []
-    for plan in usuario["planes"]:
-        for tarea in plan["tareas"]:
-            filas.append({
-                "Plan": plan["titulo"],
-                "Tarea": tarea["titulo"],
-                "Estado": tarea["estado"]
-            })
 
-    if filas:
-        df = pd.DataFrame(filas)
-        st.subheader("📋 Tabla de tareas")
-        st.dataframe(df, use_container_width=True)
+    # Gráfica de pastel con los planes creados
+    if usuario["planes"]:
+        st.subheader("🥧 Distribución de Planes creados")
+        df_planes = pd.DataFrame({"Planes": [p["titulo"] for p in usuario["planes"]]})
+        conteo_planes = df_planes["Planes"].value_counts().reset_index()
+        conteo_planes.columns = ["Plan", "Cantidad"]
 
-        conteo_estado = df["Estado"].value_counts().reset_index()
-        conteo_estado.columns = ["Estado", "Cantidad"]
-
-        st.subheader("📈 Tareas por estado")
-        fig = px.bar(conteo_estado, x="Estado", y="Cantidad", color="Estado", title="Tareas por Estado")
-        st.plotly_chart(fig, use_container_width=True)
+        fig_pie = px.pie(conteo_planes, names="Plan", values="Cantidad", title="Planes creados por usuario")
+        st.plotly_chart(fig_pie, use_container_width=True)
     else:
-        st.info("No hay tareas para mostrar en tabla o gráfica.")
+        st.info("No hay planes creados para mostrar en la gráfica de pastel.")
