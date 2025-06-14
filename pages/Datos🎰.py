@@ -4,6 +4,7 @@ import numpy as np
 import sqlite3
 import json
 
+
 st.set_page_config(page_icon="📌", layout="wide")
 st.title("Proyecto integrador - API")
 df= pd.read_csv("dataset/planiffy_users.csv")
